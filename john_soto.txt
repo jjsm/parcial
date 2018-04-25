@@ -1,0 +1,42 @@
+plsql.execute <<-SQL
+ -- CREACION TABLESPACE SIN PUNTO Y COMA
+CREATE TABLESPACE mid_term DATAFILE 'john.dbf' SIZE 20M 
+SQL
+
+plsql.execute <<-SQL
+ -- CREACION PERFIL SIN PUNTO Y COMA
+    create profile exam LIMIT idle_time 5 failed_login_attempts 2
+SQL
+
+plsql.execute <<-SQL
+ -- CREACION USUARIO SIN PUNTO Y COMA
+    CREATE USER ejercicios IDENTIFIED by oracle DEFAULT TABLESPACE mid_term QUOTA UNLIMITED ON mid_term PROFILE exam
+    GRANT  DBA, CONNECT TO ejercicios
+
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 1 SIN PUNTO Y COMA
+ CREATE OR REPLACE VIEW view_1 AS
+SELECT s.name sales_name,c.name customer_name, c.country country
+from customers c INNER JOIN  salesman s ON c.SALESMAN_ID=S.ID  WHERE c.country=s.country
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 2 SIN PUNTO Y COMA
+CREATE OR REPLACE VIEW view_2 AS
+select c.*,s.name salesman_name ,s.commission commission  from customers c inner join salesman s on c.SALESMAN_ID=s.id where s.COMMISSION>=0.12 
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 3 SIN PUNTO Y COMA
+CREATE OR REPLACE VIEW view_3 AS
+select c.name customer_name, c.country country, o.id order_number,o.order_date, o.amount order_amount 
+from orders o  left join customers c on o.CUSTOMER_ID=c.id  
+order by o.order_date asc
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 4 SIN PUNTO Y COMA
+ -- EJEMPLO CREATE VIEW ...
+SQL
